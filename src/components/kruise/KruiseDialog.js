@@ -3,28 +3,26 @@ import PropTypes from 'prop-types';
 
 // Redux
 import {connect} from 'react-redux';
-import {getPost} from '../redux/actions/dataActions';
+import {getPost, clearErrors} from '../../redux/actions/dataActions';
 
 
 // MUI
 import withStyles from '@material-ui/core/styles/withStyles';
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog/index";
+import DialogContent from "@material-ui/core/DialogContent/index";
+import CircularProgress from "@material-ui/core/CircularProgress/index";
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid/index';
+import Typography from '@material-ui/core/Typography/index';
 
 import AppIconButton from "./AppIconButton";
-import dayjs from "../plugins/dayjs";
+import dayjs from "../../plugins/dayjs";
 import {Link} from 'react-router-dom';
 import LikeButton from "./LikeButton";
+import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 
 
 const styles = (theme) => ({
@@ -58,8 +56,16 @@ class KruiseDialog extends Component {
     state = {
         open: false,
         body: '',
-        errors: {}
+        errors: {},
+        oldPath: '',
+        newPath: ''
     };
+
+    componentDidMount() {
+        if (this.props.openDialog){
+            this.openDialog();
+        }
+    }
 
     handleChange = (event) => {
         this.setState({
@@ -68,12 +74,24 @@ class KruiseDialog extends Component {
     };
 
     openDialog = () => {
-        this.setState({open: true, body: '', errors: {}});
+        let oldPath = window.location.pathname;
+
+        const { userHandle, kruiseId } = this.props;
+        const newPath = `/users/${userHandle}/kruise/${kruiseId}`;
+
+        if (oldPath === newPath) oldPath = `/users/${userHandle}`;
+
+        window.history.pushState(null, null, newPath);
+
+        this.setState({open: true, body: '', oldPath, newPath });
         this.props.getPost(this.props.kruiseId);
     };
 
     closeDialog = () => {
-        this.setState({open: false, errors: {}});
+        this.setState({open: false});
+        this.props.clearErrors();
+        window.history.pushState(null, null, this.state.oldPath);
+
     };
 
     render() {
@@ -85,21 +103,22 @@ class KruiseDialog extends Component {
                 likeCount,
                 kruiseId,
                 userHandle,
-                userImage
+                userImage,
+                comments
             },
             classes,
             UI: {isLoading}
         } = this.props;
-        const {errors, open} = this.state;
+        const {open} = this.state;
 
         const dialogMarkup = isLoading ? (
             <div className={classes.spinnerDiv}>
                 <CircularProgress size={100} thickness={2}/>
             </div>
         ) : (
-            <Grid container spacing={10}>
+            <Grid container>
                 <Grid item sm={5}>
-                    <img src={userImage} alt={`${userHandle} profile image`} className={classes.profileImage}/>
+                    <img src={userImage} alt={`${userHandle} profile`} className={classes.profileImage}/>
                 </Grid>
                 <Grid item sm={7}>
                     <Typography
@@ -123,8 +142,8 @@ class KruiseDialog extends Component {
                     <span>{commentCount} comments</span>
                 </Grid>
                 <hr className={classes.visibleSeparator}/>
-                {/*<CommentForm kruiseId={kruiseId} />*/}
-                {/*<Comments comments={comments} />*/}
+                <CommentForm kruiseId={kruiseId} />
+                <Comments comments={comments} />
             </Grid>
         );
 
@@ -149,17 +168,17 @@ class KruiseDialog extends Component {
 
 KruiseDialog.propTypes = {
     getPost: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     kruiseId: PropTypes.string.isRequired,
     userHandle: PropTypes.string.isRequired,
     kruise: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = {getPost};
+const mapDispatchToProps = {getPost, clearErrors};
 
 const mapStateToProps = (state) => {
     return {kruise: state.data.kruise, UI: state.UI};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)
-(withStyles(styles)(KruiseDialog));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(KruiseDialog));

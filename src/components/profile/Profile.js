@@ -3,17 +3,17 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 //Redux
-import {uploadProfileImage, logout} from '../redux/actions/userActions';
+import {uploadProfileImage, logout} from '../../redux/actions/userActions';
 
 // Material Ui
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-import Paper from "@material-ui/core/Paper";
-import MuiLink from "@material-ui/core/Link";
+import Button from '@material-ui/core/Button/index';
+import Paper from "@material-ui/core/Paper/index";
+import MuiLink from "@material-ui/core/Link/index";
 
 // Router
 import {Link} from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography/index";
 
 // Icons
 import LinkIcon from "@material-ui/icons/Link";
@@ -24,10 +24,11 @@ import LogoutIcon from "@material-ui/icons/KeyboardReturn";
 
 // Component
 import EditProfile from './EditProfile';
+import ProfileLoadingPlaceHolder from '../ProfileLoadingPlaceHolder';
 
 //Plugin
-import dayjs from "../plugins/dayjs";
-import AppIconButton from "./AppIconButton";
+import dayjs from "../../plugins/dayjs";
+import AppIconButton from "../kruise/AppIconButton";
 
 
 const styles = (theme) => ({...theme.appStyles});
@@ -135,9 +136,7 @@ class Profile extends Component {
                     </div>
                 </Paper>
             )
-        ) : (
-            <p>Loading...</p>
-        );
+        ) : (<ProfileLoadingPlaceHolder/>);
     }
 }
 

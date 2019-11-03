@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar/index';
+import Toolbar from '@material-ui/core/Toolbar/index';
+import Button from '@material-ui/core/Button/index';
 import {Link} from "react-router-dom";
-import AppIconButton from "./AppIconButton";
+import AppIconButton from "../kruise/AppIconButton";
 
 //
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationIcon from '@material-ui/icons/Notifications';
+import Notifications from './Notifications';
 
 //
-import AddKruise from './AddKruise'
+import AddKruise from '../kruise/AddKruise'
 
 class NavBar extends Component {
     render() {
@@ -32,11 +32,7 @@ class NavBar extends Component {
                                         <HomeIcon color="secondary" />
                                     </AppIconButton>
                                 </Link>
-                                <Link to="/notifications">
-                                    <AppIconButton title="Notification">
-                                        <NotificationIcon color="secondary" />
-                                    </AppIconButton>
-                                </Link>
+                                <Notifications />
                             </Fragment>
                         ) : (
                             <Fragment>

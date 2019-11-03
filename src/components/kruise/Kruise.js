@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // MUI Components
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card/index';
+import CardContent from '@material-ui/core/CardContent/index';
+import CardMedia from '@material-ui/core/CardMedia/index';
+import Typography from '@material-ui/core/Typography/index'
 import ChatIcon from "@material-ui/icons/Chat";
 
 //
@@ -15,7 +15,7 @@ import DeleteKruise from "./DeleteKruise";
 import KruiseDialog from "./KruiseDialog";
 
 //
-import dayjs from "../plugins/dayjs";
+import dayjs from "../../plugins/dayjs";
 
 // Redux
 import {connect} from "react-redux";
@@ -78,7 +78,7 @@ class Kruise extends Component {
                         <ChatIcon color="primary"/>
                     </AppIconButton>
                     <span>{commentCount} Comments</span>
-                    <KruiseDialog kruiseId={kruiseId} userHandle={userHandle}/>
+                    <KruiseDialog kruiseId={kruiseId} userHandle={userHandle} openDialog={this.props.openDialog}/>
                 </CardContent>
             </Card>
         );
@@ -88,7 +88,8 @@ class Kruise extends Component {
 Kruise.propTypes = {
     user: PropTypes.object.isRequired,
     kruise: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    openDialog: PropTypes.bool
 };
 
 const mapStateToProps = ({user}) => ({user});

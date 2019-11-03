@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 // Redux
 import {connect} from 'react-redux';
-import {editUserDetails} from '../redux/actions/userActions';
+import {editUserDetails} from '../../redux/actions/userActions';
 
 // MUI
 import EditIcon from "@material-ui/icons/Edit";
 import withStyles from '@material-ui/core/styles/withStyles';
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import AppIconButton from "./AppIconButton";
+import Dialog from "@material-ui/core/Dialog/index";
+import DialogTitle from "@material-ui/core/DialogTitle/index";
+import DialogContent from "@material-ui/core/DialogContent/index";
+import TextField from "@material-ui/core/TextField/index";
+import DialogActions from "@material-ui/core/DialogActions/index";
+import Button from "@material-ui/core/Button/index";
+import AppIconButton from "../kruise/AppIconButton";
 
 
 const styles = (theme) => ({

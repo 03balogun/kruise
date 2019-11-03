@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 // Redux
 import {connect} from 'react-redux';
-import {addKruise, clearErrors} from '../redux/actions/dataActions';
+import {addKruise, clearErrors} from '../../redux/actions/dataActions';
 
 
 // MUI
 import withStyles from '@material-ui/core/styles/withStyles';
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog/index";
+import DialogTitle from "@material-ui/core/DialogTitle/index";
+import DialogContent from "@material-ui/core/DialogContent/index";
+import TextField from "@material-ui/core/TextField/index";
+import DialogActions from "@material-ui/core/DialogActions/index";
+import CircularProgress from "@material-ui/core/CircularProgress/index";
+import Button from "@material-ui/core/Button/index";
 
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
